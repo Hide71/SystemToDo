@@ -24,6 +24,7 @@ namespace SystemToDo
             var serverVersion = new MySqlServerVersion(new Version(8, 0,38));
             builder.Services.AddDbContext<ApiDbContext>(o => o.UseMySql(connectionString, serverVersion));
             builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+            builder.Services.AddScoped<ITarefaRepositorio, TarefaRepositorio>();
 
             var app = builder.Build();
 

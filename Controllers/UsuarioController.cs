@@ -32,5 +32,19 @@ namespace SystemToDo.Controllers
             UsuarioModel usuario = await _usuarioRepositorio.AddUsuario(user);
             return Ok(usuario);
         }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UsuarioModel>> Editar([FromBody]UsuarioModel usuarioModel, int id)
+        {
+            usuarioModel.Id = id;
+            UsuarioModel usuario = await _usuarioRepositorio.EditUsuario(usuarioModel, id);
+            return Ok(usuario);
+            
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<UsuarioModel>> Deletar(int id)
+        {
+            bool apagado = await _usuarioRepositorio.DeleteUsuario(id);
+            return Ok(apagado);
+        }
     }
 }
