@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql;
+using Refit;
 using SystemToDo.Data;
+using SystemToDo.Integracao;
+using SystemToDo.Integracao.Interfaces;
+using SystemToDo.Integracao.Refit;
 using SystemToDo.Repositorios.Interfaces;
 
 namespace SystemToDo
@@ -25,6 +29,12 @@ namespace SystemToDo
             builder.Services.AddDbContext<ApiDbContext>(o => o.UseMySql(connectionString, serverVersion));
             builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
             builder.Services.AddScoped<ITarefaRepositorio, TarefaRepositorio>();
+            builder.Services.AddScoped<IViaCepIntegracao, ViaCepIntegracao>();
+
+            builder.Services.AddRefitClient<IViaCepIntegracaoRefit>().ConfigureHttpClient(c =>
+            {
+                c.BaseAddress = new Uri("https://viacep.com.br");
+            });
 
             var app = builder.Build();
 
